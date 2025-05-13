@@ -194,13 +194,13 @@
                 const statusClass = item.status === 'success' ? 'success' : 'error';
                 const itemDiv = document.createElement('div');
                 itemDiv.className = `history-item ${statusClass}`;
-                itemDiv.textContent = `${item.code} (${item.status === 'success' ? 'Успешно' : 'Ошибка'}: ${item.message})`;
+                itemDiv.textContent = `${item.code} (${item.status === 'success' ? 'Успешно' : 'Ошибка'}: ${item.message}) - ${new Date(item.timestamp).toLocaleString()}`;
                 historyDiv.appendChild(itemDiv);
             });
         }
 
         function saveHistory(code, status, message) {
-            history.unshift({ code, status, message });
+            history.unshift({ code, status, message, timestamp: new Date().toISOString() });
             if (history.length > 10) history.pop();
             localStorage.setItem('promoHistory', JSON.stringify(history));
             loadHistory();
@@ -242,12 +242,27 @@
             toggleLoading(true);
             try {
                 Telegram.WebApp.sendData(JSON.stringify({ promoCode: promoCode }));
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                saveHistory(promoCode, 'success', 'Отправлено в бот');
-                showMessage('Промокод отправлен! Проверьте чат с ботом.', 'success');
+                const response = await new Promise(resolve => {
+                    Telegram.WebApp.onEvent('web_app_data', data => resolve(data));
+                    setTimeout(() => resolve(null), 5000); // Таймаут 5 секунд
+                });
+
+                if (response) {
+                    const result = JSON.parse(response.data);
+                    if (result.status === 'success') {
+                        saveHistory(promoCode, 'success', 'Активирован');
+                        showMessage('Промокод активирован! Проверьте чат.', 'success');
+                    } else if (result.status === 'error') {
+                        saveHistory(promoCode, 'error', result.message || 'Неизвестная ошибка');
+                        showMessage(result.message || 'Ошибка активации промокода.', 'error');
+                    }
+                } else {
+                    saveHistory(promoCode, 'error', 'Таймаут ответа от бота');
+                    showMessage('Таймаут ответа от бота. Попробуйте снова.', 'error');
+                }
             } catch (error) {
-                saveHistory(promoCode, 'error', 'Ошибка отправки');
-                showMessage('Ошибка при отправке промокода. Попробуйте снова.', 'error');
+                saveHistory(promoCode, 'error', 'Ошибка сети');
+                showMessage('Ошибка сети. Проверьте подключение.', 'error');
             } finally {
                 toggleLoading(false);
             }
