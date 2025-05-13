@@ -242,16 +242,27 @@
             toggleLoading(true);
             try {
                 Telegram.WebApp.sendData(JSON.stringify({ promoCode: promoCode }));
-                const response = await new Promise(resolve => {
-                    Telegram.WebApp.onEvent('web_app_data', data => resolve(data));
-                    setTimeout(() => resolve(null), 5000); // Таймаут 5 секунд
-                });
+
+                let attempts = 3;
+                let response = null;
+                while (attempts > 0 && !response) {
+                    response = await new Promise((resolve) => {
+                        Telegram.WebApp.onEvent('web_app_data', (data) => resolve(data));
+                        setTimeout(() => resolve(null), 10000); // Таймаут 10 секунд
+                    });
+                    if (!response) {
+                        attempts--;
+                        if (attempts > 0) {
+                            await new Promise(resolve => setTimeout(resolve, 2000)); // Ожидание 2 секунды перед повтором
+                        }
+                    }
+                }
 
                 if (response) {
                     const result = JSON.parse(response.data);
                     if (result.status === 'success') {
-                        saveHistory(promoCode, 'success', 'Активирован');
-                        showMessage('Промокод активирован! Проверьте чат.', 'success');
+                        saveHistory(promoCode, 'success', result.message || 'Активирован');
+                        showMessage(result.message || 'Промокод активирован! Проверьте чат.', 'success');
                     } else if (result.status === 'error') {
                         saveHistory(promoCode, 'error', result.message || 'Неизвестная ошибка');
                         showMessage(result.message || 'Ошибка активации промокода.', 'error');
