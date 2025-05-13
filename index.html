@@ -7,158 +7,34 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.5s;
-        }
-        .container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            text-align: center;
-            color: #fff;
-        }
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 20px;
-        }
-        input {
-            padding: 12px;
-            font-size: 16px;
-            border: none;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-            outline: none;
-            transition: background 0.3s, transform 0.1s;
-        }
-        input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-        input:focus {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.02);
-        }
-        button {
-            padding: 12px;
-            font-size: 16px;
-            font-weight: 500;
-            border: none;
-            border-radius: 8px;
-            background: #00c4b4;
-            color: #fff;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.1s;
-            margin: 5px 0;
-        }
-        button:hover {
-            background: #00a69b;
-            transform: scale(1.05);
-        }
-        button:active {
-            transform: scale(0.95);
-        }
-        .secondary-btn {
-            background: #ff6f61;
-        }
-        .secondary-btn:hover {
-            background: #e65a50;
-        }
-        .message {
-            margin-top: 15px;
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 14px;
-            animation: slideIn 0.3s ease-in-out;
-        }
-        .success {
-            background: rgba(0, 200, 83, 0.2);
-            color: #00c853;
-        }
-        .error {
-            background: rgba(244, 67, 54, 0.2);
-            color: #f44336;
-        }
-        .info {
-            background: rgba(33, 150, 243, 0.2);
-            color: #2196f3;
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .history {
-            margin-top: 20px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
-            max-height: 150px;
-            overflow-y: auto;
-        }
-        .history-item {
-            padding: 5px 0;
-            font-size: 14px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .theme-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        .loading {
-            display: none;
-            margin: 10px 0;
-            width: 24px;
-            height: 24px;
-            border: 3px solid #fff;
-            border-top: 3px solid #00c4b4;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        body.dark-theme {
-            background: linear-gradient(135deg, #2c3e50, #1a252f);
-        }
-        body.dark-theme .container {
-            background: rgba(0, 0, 0, 0.3);
-        }
-        body.dark-theme input {
-            background: rgba(0, 0, 0, 0.4);
-        }
-        body.dark-theme input:focus {
-            background: rgba(0, 0, 0, 0.5);
-        }
+        /* Стили остаются без изменений */
+        body { font-family: 'Roboto', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #1e3c72, #2a5298); color: #fff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: background 0.5s; }
+        .container { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 20px; border-radius: 15px; width: 90%; max-width: 400px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        h1 { font-size: 24px; margin-bottom: 20px; text-align: center; color: #fff; }
+        .input-group { display: flex; flex-direction: column; margin-bottom: 20px; }
+        input { padding: 12px; font-size: 16px; border: none; border-radius: 8px; background: rgba(255, 255, 255, 0.2); color: #fff; outline: none; transition: background 0.3s, transform 0.1s; }
+        input::placeholder { color: rgba(255, 255, 255, 0.7); }
+        input:focus { background: rgba(255, 255, 255, 0.3); transform: scale(1.02); }
+        button { padding: 12px; font-size: 16px; font-weight: 500; border: none; border-radius: 8px; background: #00c4b4; color: #fff; cursor: pointer; transition: background 0.3s, transform 0.1s; margin: 5px 0; }
+        button:hover { background: #00a69b; transform: scale(1.05); }
+        button:active { transform: scale(0.95); }
+        .secondary-btn { background: #ff6f61; }
+        .secondary-btn:hover { background: #e65a50; }
+        .message { margin-top: 15px; padding: 10px; border-radius: 8px; text-align: center; font-size: 14px; animation: slideIn 0.3s ease-in-out; }
+        .success { background: rgba(0, 200, 83, 0.2); color: #00c853; }
+        .error { background: rgba(244, 67, 54, 0.2); color: #f44336; }
+        .info { background: rgba(33, 150, 243, 0.2); color: #2196f3; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .history { margin-top: 20px; padding: 10px; background: rgba(255, 255, 255, 0.15); border-radius: 8px; max-height: 150px; overflow-y: auto; }
+        .history-item { padding: 5px 0; font-size: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .theme-toggle { position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 24px; cursor: pointer; }
+        .loading { display: none; margin: 10px 0; width: 24px; height: 24px; border: 3px solid #fff; border-top: 3px solid #00c4b4; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        body.dark-theme { background: linear-gradient(135deg, #2c3e50, #1a252f); }
+        body.dark-theme .container { background: rgba(0, 0, 0, 0.3); }
+        body.dark-theme input { background: rgba(0, 0, 0, 0.4); }
+        body.dark-theme input:focus { background: rgba(0, 0, 0, 0.5); }
     </style>
 </head>
 <body>
@@ -241,19 +117,34 @@
 
             toggleLoading(true);
             try {
+                console.log("Sending promo code at: ", new Date().toISOString());
                 Telegram.WebApp.sendData(JSON.stringify({ promoCode: promoCode }));
 
                 let attempts = 3;
                 let response = null;
                 while (attempts > 0 && !response) {
+                    console.log(`Attempt ${4 - attempts} at: `, new Date().toISOString());
                     response = await new Promise((resolve) => {
-                        Telegram.WebApp.onEvent('web_app_data', (data) => resolve(data));
-                        setTimeout(() => resolve(null), 10000); // Таймаут 10 секунд
+                        Telegram.WebApp.onEvent('web_app_data', (data) => {
+                            console.log("Received web_app_data at: ", new Date().toISOString(), data);
+                            resolve(data);
+                        });
+                        Telegram.WebApp.onEvent('message', (msg) => {
+                            try {
+                                const result = JSON.parse(msg.text);
+                                console.log("Received message at: ", new Date().toISOString(), result);
+                                resolve({ data: JSON.stringify(result) });
+                            } catch (e) {
+                                console.log("Invalid message format: ", msg.text);
+                            }
+                        });
+                        setTimeout(() => resolve(null), 10000);
                     });
                     if (!response) {
                         attempts--;
                         if (attempts > 0) {
-                            await new Promise(resolve => setTimeout(resolve, 2000)); // Ожидание 2 секунды перед повтором
+                            console.log("Waiting for retry at: ", new Date().toISOString());
+                            await new Promise(resolve => setTimeout(resolve, 2000));
                         }
                     }
                 }
@@ -272,6 +163,7 @@
                     showMessage('Таймаут ответа от бота. Попробуйте снова.', 'error');
                 }
             } catch (error) {
+                console.error("Error in submitPromoCode: ", error);
                 saveHistory(promoCode, 'error', 'Ошибка сети');
                 showMessage('Ошибка сети. Проверьте подключение.', 'error');
             } finally {
@@ -288,6 +180,7 @@
         }
 
         window.onload = () => {
+            console.log("Web App loaded at: ", new Date().toISOString());
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'dark') {
                 document.body.classList.add('dark-theme');
